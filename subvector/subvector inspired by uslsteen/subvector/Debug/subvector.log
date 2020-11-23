@@ -1,0 +1,7 @@
+﻿  subvector.cpp
+C:\Users\Masha\Desktop\subvector\subvector_vs\subvector\subvector\subvector.cpp(134,19): warning C4244: инициализация: преобразование "_Rep" в "unsigned int", возможна потеря данных
+          with
+          [
+              _Rep=__int64
+          ]
+  subvector.vcxproj -> C:\Users\Masha\Desktop\subvector\subvector_vs\subvector\Debug\subvector.exe
