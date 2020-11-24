@@ -74,7 +74,7 @@ bool push_back(subforwardlist** sfl, int d) {
 		}
 		temp->next = new subforwardlist;
 		temp->data = d;
-
+		//temp->next->next = NULL; ??
 		
 	}
 	//size??
@@ -148,6 +148,7 @@ int pop_forward(subforwardlist** sfl) {
 bool push_where(subforwardlist** sfl, unsigned int where, int d) {
 
 	//сначала нужно найти элемент, который предшествует тому, индекс которого ищем
+	//если null??
 
 	if (where == 0)
 	{
@@ -155,18 +156,22 @@ bool push_where(subforwardlist** sfl, unsigned int where, int d) {
 	}
 	else
 	{
-		subforwardlist* prev = (*sfl)->next;
+		subforwardlist* prev = nullptr; // = (*sfl);   ///->next;
+		subforwardlist* cur = (*sfl);
 
-		for (unsigned int i = 0; i < where - 1; i++)
+		for (unsigned int i = 0; i != where; i++)
 		{
-			prev = prev->next;
+			prev = cur;
+			cur = cur->next;
+			//prev = prev->next;
 		}
 
 		//значение адреса предыдущего объекта присваиваем новому: теперь новый указывает на следующий
 		subforwardlist* new_el = new subforwardlist;
-		new_el->next = prev->next;
+		new_el->next = cur->next;
 		new_el->data = d;
 		prev->next = new_el;
+		//prev->next = new_el;
 
 		//size??
 	}
@@ -215,13 +220,17 @@ int main()
 	init(&sfl);
 	push_forward(&sfl, 5);
 	push_forward(&sfl, 2);
-	//push_back(&sfl, 3);
+	push_back(&sfl, 3);
 	//push_back(&sfl, 4);
-	cout << where(&sfl, 1);
+	//cout << where(&sfl, 1);
 	//cout << size(&sfl);
 	pop_front(&sfl);
+	push_forward(&sfl, 2);
+	push_forward(&sfl, 3);
 	push_where(&sfl, 1, 7);
-	cout << where(&sfl, 1);
+	cout << where(&sfl, 1) << endl;
+	cout << where(&sfl, 2);
+
 	
 	return 0;
 }
