@@ -1,1 +1,8 @@
-﻿  subforwardlist.vcxproj -> C:\Users\Masha\source\repos\subforwardlist\Debug\subforwardlist.exe
+﻿  subforwardlist.cpp
+D:\Code\mipt\subforwardlist\subforwardlist\subforwardlist.cpp(18,19): warning C4244: инициализация: преобразование "_Rep" в "unsigned int", возможна потеря данных
+          with
+          [
+              _Rep=__int64
+          ]
+D:\Code\mipt\subforwardlist\subforwardlist\subforwardlist.h(71): warning C4715: where: значение возвращается не при всех путях выполнения
+  subforwardlist.vcxproj -> D:\Code\mipt\subforwardlist\Debug\subforwardlist.exe

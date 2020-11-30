@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{c0e75a8d-96cb-49f2-9030-7bd6ac39a846}</ProjectGuid>
+    <ProjectGuid>{d917977d-1016-4c61-9ef4-9bd7f085a995}</ProjectGuid>
     <RootNamespace>subforwardlist</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -140,6 +140,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="subforwardlist.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="subforwardlist.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
