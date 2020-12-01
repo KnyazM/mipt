@@ -4,5 +4,4 @@ D:\Code\mipt\subforwardlist\subforwardlist\subforwardlist.cpp(18,19): warning C4
           [
               _Rep=__int64
           ]
-D:\Code\mipt\subforwardlist\subforwardlist\subforwardlist.h(71): warning C4715: where: значение возвращается не при всех путях выполнения
   subforwardlist.vcxproj -> D:\Code\mipt\subforwardlist\Debug\subforwardlist.exe

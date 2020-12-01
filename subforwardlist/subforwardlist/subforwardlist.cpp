@@ -107,6 +107,7 @@ int main()
     //----------- Test 003 Straight pop_back
 
     start = get_time();
+ 
     for (int i = 0; i < n; i++)
     {
         if (pop_back(&sv) != test_sequence[i])
@@ -117,7 +118,8 @@ int main()
     }
     finish = get_time();
 
-    if (size(&sv))
+
+    if (size(&sv)) //если размер не ноль, то не все удалилось!
     {
         cout << endl << "--- !!! Failed push/pop consistency, some elememts stuck !!! ---" << endl;
         return 0;
