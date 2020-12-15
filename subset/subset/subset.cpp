@@ -18,6 +18,19 @@ bool init(subset_node** sn){
         return true;
 }
 
+//существование
+bool exist(subset_node* sn, int k) {
+    if (sn == NULL)
+        return false;
+    if (sn->key == k)
+        return true;
+    if (k < sn->key)
+        return exist(sn->left, k);
+    if (k > sn->key)
+        return exist(sn->right, k);
+
+
+}
 
 //поиск элемента в дереве, возвращает указатель на узел
 subset_node* find(subset_node* sn, int k) {
@@ -53,60 +66,85 @@ bool insert(subset_node** sn, int k){
         insert(&(*sn)->right, k);
  }
 
-//удаление элемента из дерева
-bool remove(subset_node** sn, int k)
-{
-    if ((*sn) == NULL)
-        return false;
+//удаление элемента
+subset_node* del_elem(subset_node* sn, int k) {
 
-    if ((*sn)->key == k)
-    {
-        subset_node* temp;
+    if (sn == NULL)
 
-        if (!(*sn)->right)
-        {
-            temp = (*sn)->left;
-        }
-        else
-        {
-            subset_node* temp2 = (*sn)->right;
+        return sn;
 
-            if (!temp2->left)
-            {
-                temp2->left = (*sn)->right;
-                temp = temp2;
+    if (k == sn->key) {
+
+        subset_node* tmp;
+
+        if (sn->right == NULL)
+
+            tmp = sn->left;
+
+        else {
+
+            subset_node* tmp2 = sn->right;
+
+            if (tmp2->left == NULL) {
+
+                tmp2->left = sn->left;
+
+                tmp = tmp2;
+
             }
-            else
-            {
-                subset_node* min_el = temp2->left;
-                while (min_el->left != NULL)
-                {
-                    temp2 = min_el;
-                    min_el = temp2->left;
+
+            else {
+
+                subset_node* min = tmp2->left;
+
+                while (min->left!= NULL) {
+
+                    tmp2 = min;
+
+                    min = tmp2->left;
+
                 }
-                temp2->left = min_el->right;
-                min_el->left = (*sn)->left;
-                min_el->right = (*sn)->right;
-                temp = min_el;
+
+                tmp2->left = min->right;
+
+                min->left = sn->left;
+
+                min->right = sn->right;
+
+                tmp = min;
+
             }
 
         }
-        /*delete (*sn);*/
-        //(*sn) = temp;
-        /*delete temp;*/
-        //temp = NULL;
 
-           return true;
+        delete sn;
+        sn = NULL;
+        return tmp;
+
     }
 
+    else if (k < sn->key)
 
-    if (k < (*sn)->key)
-        remove(&(*sn)->left, k);
-    if (k > (*sn)->key)
-        remove(&(*sn)->right, k);
+        sn->left = del_elem(sn->left, k);
 
-    return true;
+    else
+
+        sn->right = del_elem(sn->right, k);
+
+    return sn;
+
 }
+
+//тоже удаление, но то, которое надо
+bool remove(subset_node** sn, int k) {
+    if (exist(*sn, k))
+    {
+        del_elem(*sn, k);
+        return true;
+    }
+ return false;
+}
+
 
 //количество элементов в дереве
 unsigned int size(subset_node* sn) {
@@ -131,11 +169,22 @@ unsigned int height(subset_node* sn) {
 void destructor(subset_node* sn) {
     if (!sn)
         return;
-    destructor(sn->left);
-    destructor(sn->right);
+      destructor(sn->left);
+      destructor(sn->right);
     delete sn;
-    sn = NULL;
+    sn = nullptr;
 }
+
+//
+//void preorder(node* root)
+//{
+//    if (root == NULL)
+//        return;
+//    if (root->key)
+//        printf("%d ", root->key);
+//    preorder(root->left);
+//    preorder(root->right);
+//}
 
 int main()
 {
@@ -155,14 +204,30 @@ int main()
     cout << "size: " << size(sn) << "  ";
     cout << "height: " << height(sn) << endl;
 
-    cout << "Remove test" << endl;
-    cout << find(sn, 5) << " ";
-    cout << remove(&sn, 5) << " ";
-    cout << find(sn, 10) << " ";
+    //cout << "Remove test" << endl;
+    //cout << find(sn, 5) << " ";
+    //cout << remove(&sn, 5) << " ";
+    //cout << find(sn, 10) << " ";
+    ////cout << "size: " << size(sn) << "  ";
+
+
+    //cout << "Del elem test" << endl;
+    //cout << find(sn, 5) << " ";
+    //cout << del_elem(sn, 5) << " ";
+    ////cout << find(sn, 10) << " ";
     //cout << "size: " << size(sn) << "  ";
+    //cout << del_elem(sn, 7) << " ";
+    cout << "size: " << size(sn) << "  ";
+    
+    //cout << "Remove test" << endl;
+    cout << exist(sn, 60) << " ";
+    cout << remove(&sn, 5) << " ";
+    cout << remove(&sn, 35)<< " ";
+    cout << exist(sn, 60) << " ";
+    cout << remove(&sn, 5);
+    cout << "size: " << size(sn) << "  " << endl;
 
-
-    cout << "Destructor test" << endl;
-    destructor(sn);
-    /*cout << size(sn);*/
+ cout << "Destructor test" << endl;
+destructor(sn);
+cout << size(sn);
 }
