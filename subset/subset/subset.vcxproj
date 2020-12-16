@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{7433f80e-b77e-48a1-8f10-592d22d137c6}</ProjectGuid>
+    <ProjectGuid>{609c7701-a59c-41c3-8d9f-99baa6033772}</ProjectGuid>
     <RootNamespace>subset</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -140,6 +140,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="subset.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="subset.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

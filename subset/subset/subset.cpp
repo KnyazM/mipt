@@ -1,233 +1,464 @@
 ﻿#include <iostream>
+#include "subset.h"
+#include <random>
+#include <chrono>
+#include <climits>
 
-using namespace std;
+using std::cout;
+using std::endl;
 
-//бинарное дерево поиска
-struct subset_node {
-
-    int key;
-    subset_node* right;
-    subset_node* left;
-
-};
-
-//инициализация пустого дерева
-bool init(subset_node** sn){ 
-    *sn = NULL;
-
-        return true;
+double get_time()
+{
+    return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now().time_since_epoch()).count() / 1e6;
 }
 
-//существование
-bool exist(subset_node* sn, int k) {
-    if (sn == NULL)
-        return false;
-    if (sn->key == k)
-        return true;
-    if (k < sn->key)
-        return exist(sn->left, k);
-    if (k > sn->key)
-        return exist(sn->right, k);
-
-
+int rand_uns(int min, int max)
+{
+    unsigned seed = std::chrono::steady_clock::now().time_since_epoch().count();
+    static std::default_random_engine e(seed);
+    std::uniform_int_distribution<int> d(min, max);
+    return d(e);
 }
-
-//поиск элемента в дереве, возвращает указатель на узел
-subset_node* find(subset_node* sn, int k) {
-    if (sn == NULL)
-        return NULL;
-    if (sn->key == k)
-        return sn;
-    if (k < sn->key)
-        return find(sn->left, k);
-    if (k > sn->key)
-        return find(sn->right, k);
-}
-
-//добавление элемента в дерево, дубли игнорировать (false, если элемент дублируется)
-
-bool insert(subset_node** sn, int k){
-    //если дерево пустое, то создаем
-    if (!(*sn))
-    {
-        *sn = new subset_node;
-        (*sn)->key = k;
-        (*sn)->right = NULL;
-        (*sn)->left = NULL;
-        return true;
-    }
-    //уже существует, возвращаем false
-    if (find(*sn, k) != NULL)
-        return false;
-    //не существовал ранее, снова вызываем insert
-    if (k < (*sn)->key)
-        insert(&(*sn)->left, k);
-    if (k > (*sn)->key)
-        insert(&(*sn)->right, k);
- }
-
-//удаление элемента
-subset_node* del_elem(subset_node* sn, int k) {
-
-    if (sn == NULL)
-
-        return sn;
-
-    if (k == sn->key) {
-
-        subset_node* tmp;
-
-        if (sn->right == NULL)
-
-            tmp = sn->left;
-
-        else {
-
-            subset_node* tmp2 = sn->right;
-
-            if (tmp2->left == NULL) {
-
-                tmp2->left = sn->left;
-
-                tmp = tmp2;
-
-            }
-
-            else {
-
-                subset_node* min = tmp2->left;
-
-                while (min->left!= NULL) {
-
-                    tmp2 = min;
-
-                    min = tmp2->left;
-
-                }
-
-                tmp2->left = min->right;
-
-                min->left = sn->left;
-
-                min->right = sn->right;
-
-                tmp = min;
-
-            }
-
-        }
-
-        delete sn;
-        sn = NULL;
-        return tmp;
-
-    }
-
-    else if (k < sn->key)
-
-        sn->left = del_elem(sn->left, k);
-
-    else
-
-        sn->right = del_elem(sn->right, k);
-
-    return sn;
-
-}
-
-//тоже удаление, но то, которое надо
-bool remove(subset_node** sn, int k) {
-    if (exist(*sn, k))
-    {
-        del_elem(*sn, k);
-        return true;
-    }
- return false;
-}
-
-
-//количество элементов в дереве
-unsigned int size(subset_node* sn) {
-    unsigned int s = 0;
-    if (sn == NULL)
-        return 0;
-    else
-        return size(sn->left)+size(sn->right)+1;
-}
-
-
-
-//высота дерева
-unsigned int height(subset_node* sn) {
-    if (sn == NULL)
-        return 0;
-    return (max(height(sn->right), height(sn->left))+1);
-    
-}
-
-//очистить всю используемую память
-void destructor(subset_node* sn) {
-    if (!sn)
-        return;
-      destructor(sn->left);
-      destructor(sn->right);
-    delete sn;
-    sn = nullptr;
-}
-
-//
-//void preorder(node* root)
-//{
-//    if (root == NULL)
-//        return;
-//    if (root->key)
-//        printf("%d ", root->key);
-//    preorder(root->left);
-//    preorder(root->right);
-//}
 
 int main()
 {
-    subset_node *sn;
+    int n = 10000;
+    int sum_for_O3 = 0, sum_check = 0, test_sequence_sum = 0, ongoing_sum = 0,
+        * sequent_sequence = new int[n],
+        * rand_sequence_10 = new int[n],
+        * rand_sequence_100 = new int[n],
+        * rand_sequence_n = new int[n],
+        * rand_sequence_unique = new int[n],
+        * sorted_sequence_unique = new int[n];
+    double start = 0, finish = 0, total = 0;
+    cout << std::fixed;
+    cout.precision(4);
 
-    cout << "Init test" << endl;
-    cout << "bool of init: " << init(&sn) << " ";
-    cout << "size: " << size(sn) << endl;
+    //----------- Initialization
 
-    cout << "Insert test" << endl;
-    insert(&sn, 10);
-    insert(&sn, 35);
-    insert(&sn, 5);
-    insert(&sn, 1);
-    insert(&sn, 7);
-    insert(&sn, 20); insert(&sn, 99);
-    cout << "size: " << size(sn) << "  ";
-    cout << "height: " << height(sn) << endl;
+    start = get_time();
+    for (int i = 0; i < n; i++)
+    {
+        sequent_sequence[i] = i;
+        rand_sequence_10[i] = rand_uns(0, 10);
+        rand_sequence_100[i] = rand_uns(0, 100);
+        rand_sequence_n[i] = rand_uns(0, n);
+    }
+    for (int i = 0; i < n; i++)
+    {
+        rand_sequence_unique[i] = rand_uns(0, INT_MAX);
+        for (int j = 0; j < i; j++)
+            if (rand_sequence_unique[i] == rand_sequence_unique[j])
+            {
+                i--;
+                break;
+            }
+    }
+    for (int i = 0; i < n; i++)
+        sorted_sequence_unique[i] = rand_sequence_unique[i];
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < n - i - 1; j++)
+            if (sorted_sequence_unique[j] > sorted_sequence_unique[j + 1])
+            {
+                int tmp = sorted_sequence_unique[j];
+                sorted_sequence_unique[j] = sorted_sequence_unique[j + 1];
+                sorted_sequence_unique[j + 1] = tmp;
+            }
 
-    //cout << "Remove test" << endl;
-    //cout << find(sn, 5) << " ";
-    //cout << remove(&sn, 5) << " ";
-    //cout << find(sn, 10) << " ";
-    ////cout << "size: " << size(sn) << "  ";
+
+    finish = get_time();
+
+    cout << "Test sequence initialization: \t\t\t\t" << finish - start << endl;
+
+    subset_node* sn;
+    init(&sn);
+
+    //----------- Test 000 Insert of a sequent sequence
+
+    start = get_time();
+    cout << "a";
+    for (int i = 0; i < n; i++)
+    {
+        insert(&sn, sequent_sequence[i]);
+    }
+    finish = get_time();
+    cout << "b";
+    if (size(sn) != n)
+    {
+        cout << endl << "--- !!! Failed insert consistency or size measurement, wrong number of elements !!! ---" << endl;
+        return 0;
+    }
+    if (height(sn) != n)
+    {
+        cout << endl << "--- !!! Failed insert consistency or height measurement, wrong height !!! ---" << endl;
+        return 0;
+    }
+
+    cout << "000 Insert of a sequent sequence: \t\t\t\t" << finish - start << endl;
+    total += finish - start;
+
+    //----------- Test 001 Finding of a sequent sequence
+
+    start = get_time();
+
+    for (int i = 0; i < n; i++)
+    {
+        if (!find(sn, sequent_sequence[i]))
+        {
+            cout << endl << "--- !!! Failed insert consistency or find, an element was not found !!! ---" << endl;
+            return 0;
+        }
+    }
+    if (find(sn, n + 1))
+    {
+        cout << endl << "--- !!! Failed find, an extra element was found !!! ---" << endl;
+        return 0;
+    }
+    if (find(sn, -1))
+    {
+        cout << endl << "--- !!! Failed find, an extra element was found !!! ---" << endl;
+        return 0;
+    }
+
+    finish = get_time();
+
+    cout << "001 Finding of a sequent sequence: \t\t\t\t" << finish - start << endl;
+    total += finish - start;
+
+    //----------- Test 002 Remove of a sequent sequence
+
+    start = get_time();
+
+    for (int i = 0; i < n; i++)
+    {
+        remove(&sn, sequent_sequence[i]);
+    }
+
+    finish = get_time();
+
+    if (size(sn) != 0)
+    {
+        cout << endl << "--- !!! Failed insert consistency or size measurement, elements stuck !!! ---" << endl;
+        return 0;
+    }
+    if (height(sn) != 0)
+    {
+        cout << endl << "--- !!! Failed insert consistency or height measurement, too high for an empty tree !!! ---" << endl;
+        return 0;
+    }
+
+    cout << "002 Remove of a sequent sequence: \t\t\t\t" << finish - start << endl;
+    total += finish - start;
+
+    //----------- Test 003 Insert of a random sequence (0 - 10)
+
+    start = get_time();
+    for (int i = 0; i < n; i++)
+    {
+        insert(&sn, rand_sequence_10[i]);
+    }
+    finish = get_time();
+
+    auto content = DFS(sn);
+    auto size_content = size(sn);
+    for (int i = 0; i < size_content; i++)
+        cout << content[i] << " ";
+    cout << endl;
+    delete[] content;
+
+    cout << "003 Insert of a random sequence (0 - 10): \t\t\t\t" << finish - start << endl;
+    total += finish - start;
+
+    //----------- Test 004 Finding of a random sequence (0 - 10)
+
+    start = get_time();
+
+    for (int i = 0; i < n; i++)
+    {
+        if (!find(sn, rand_sequence_10[i]))
+        {
+            cout << endl << "--- !!! Failed insert consistency or find, an element was not found !!! ---" << endl;
+            return 0;
+        }
+    }
+    if (find(sn, n + 1))
+    {
+        cout << endl << "--- !!! Failed find, an extra element was found !!! ---" << endl;
+        return 0;
+    }
+    if (find(sn, -1))
+    {
+        cout << endl << "--- !!! Failed find, an extra element was found !!! ---" << endl;
+        return 0;
+    }
+
+    finish = get_time();
+
+    cout << "004 Finding of a random sequence (0 - 10): \t\t\t\t" << finish - start << endl;
+    total += finish - start;
+
+    //----------- Test 005 Remove of a random sequence (0 - 10)
+
+    start = get_time();
+
+    for (int i = 0; i < n; i++)
+    {
+        remove(&sn, rand_sequence_10[i]);
+    }
+
+    finish = get_time();
+
+    if (size(sn) != 0)
+    {
+        cout << endl << "--- !!! Failed insert consistency or size measurement, elements stuck !!! ---" << endl;
+        return 0;
+    }
+    if (height(sn) != 0)
+    {
+        cout << endl << "--- !!! Failed insert consistency or height measurement, too high for an empty tree !!! ---" << endl;
+        return 0;
+    }
+
+    cout << "005 Remove of a random sequence (0 - 10): \t\t\t\t" << finish - start << endl;
+    total += finish - start;
+
+    //----------- Test 006 Insert of a random sequence (0 - 100)
+
+    start = get_time();
+    for (int i = 0; i < n; i++)
+    {
+        insert(&sn, rand_sequence_100[i]);
+    }
+    finish = get_time();
+
+    content = DFS(sn);
+    size_content = size(sn);
+    for (int i = 0; i < size_content; i++)
+        cout << content[i] << " ";
+    cout << endl;
+    delete[] content;
+
+    cout << "006 Insert of a random sequence (0 - 100): \t\t\t\t" << finish - start << endl;
+    total += finish - start;
+
+    //----------- Test 007 Finding of a random sequence (0 - 100)
+
+    start = get_time();
+
+    for (int i = 0; i < n; i++)
+    {
+        if (!find(sn, rand_sequence_100[i]))
+        {
+            cout << endl << "--- !!! Failed insert consistency or find, an element was not found !!! ---" << endl;
+            return 0;
+        }
+    }
+    if (find(sn, n + 1))
+    {
+        cout << endl << "--- !!! Failed find, an extra element was found !!! ---" << endl;
+        return 0;
+    }
+    if (find(sn, -1))
+    {
+        cout << endl << "--- !!! Failed find, an extra element was found !!! ---" << endl;
+        return 0;
+    }
+
+    finish = get_time();
+
+    cout << "007 Finding of a random sequence (0 - 100): \t\t\t\t" << finish - start << endl;
+    total += finish - start;
+
+    //----------- Test 008 Remove of a random sequence (0 - 100)
+
+    start = get_time();
+
+    for (int i = 0; i < n; i++)
+    {
+        remove(&sn, rand_sequence_100[i]);
+    }
+
+    finish = get_time();
+
+    if (size(sn) != 0)
+    {
+        cout << endl << "--- !!! Failed insert consistency or size measurement, elements stuck !!! ---" << endl;
+        return 0;
+    }
+    if (height(sn) != 0)
+    {
+        cout << endl << "--- !!! Failed insert consistency or height measurement, too high for an empty tree !!! ---" << endl;
+        return 0;
+    }
+
+    cout << "008 Remove of a random sequence (0 - 100): \t\t\t\t" << finish - start << endl;
+    total += finish - start;
+
+    //----------- Test 009 Insert of a random sequence (0 - n)
+
+    start = get_time();
+    for (int i = 0; i < n; i++)
+    {
+        insert(&sn, rand_sequence_n[i]);
+    }
+    finish = get_time();
+
+    cout << "009 Insert of a random sequence (0 - n): \t\t\t\t" << finish - start << endl;
+    total += finish - start;
+
+    //----------- Test 010 Finding of a random sequence (0 - n)
+
+    start = get_time();
+
+    for (int i = 0; i < n; i++)
+    {
+        if (!find(sn, rand_sequence_n[i]))
+        {
+            cout << endl << "--- !!! Failed insert consistency or find, an element was not found !!! ---" << endl;
+            return 0;
+        }
+    }
+    if (find(sn, n + 1))
+    {
+        cout << endl << "--- !!! Failed find, an extra element was found !!! ---" << endl;
+        return 0;
+    }
+    if (find(sn, -1))
+    {
+        cout << endl << "--- !!! Failed find, an extra element was found !!! ---" << endl;
+        return 0;
+    }
+
+    finish = get_time();
+
+    cout << "010 Finding of a random sequence (0 - n): \t\t\t\t" << finish - start << endl;
+    total += finish - start;
+
+    //----------- Test 011 Remove of a random sequence (0 - n)
+
+    start = get_time();
+
+    for (int i = 0; i < n; i++)
+    {
+        remove(&sn, rand_sequence_n[i]);
+    }
+
+    finish = get_time();
+
+    if (size(sn) != 0)
+    {
+        cout << endl << "--- !!! Failed insert consistency or size measurement, elements stuck !!! ---" << endl;
+        return 0;
+    }
+    if (height(sn) != 0)
+    {
+        cout << endl << "--- !!! Failed insert consistency or height measurement, too high for an empty tree !!! ---" << endl;
+        return 0;
+    }
+
+    cout << "011 Remove of a random sequence (0 - n): \t\t\t\t" << finish - start << endl;
+    total += finish - start;
+
+    //----------- Test 012 Insert of an unique sequence (0 - n)
+
+    start = get_time();
+    for (int i = 0; i < n; i++)
+    {
+        insert(&sn, rand_sequence_unique[i]);
+    }
+    finish = get_time();
+
+    cout << "012 Insert of an unique sequence (0 - n): \t\t\t\t" << finish - start << endl;
+    total += finish - start;
+
+    //----------- Test 013 Finding of an unique sequence (0 - n)
+
+    start = get_time();
+
+    for (int i = 0; i < n; i++)
+    {
+        if (!find(sn, rand_sequence_unique[i]))
+        {
+            cout << endl << "--- !!! Failed insert consistency or find, an element was not found !!! ---" << endl;
+            return 0;
+        }
+    }
+    if (find(sn, n + 1))
+    {
+        cout << endl << "--- !!! Failed find, an extra element was found !!! ---" << endl;
+        return 0;
+    }
+    if (find(sn, -1))
+    {
+        cout << endl << "--- !!! Failed find, an extra element was found !!! ---" << endl;
+        return 0;
+    }
+
+    finish = get_time();
+
+    cout << "013 Finding of an unique sequence (0 - n): \t\t\t\t" << finish - start << endl;
+    total += finish - start;
+
+    //----------- Test 014 Checking the searchiness of the tree
+
+    content = DFS(sn);
+    size_content = size(sn);
+
+    if (size_content != n)
+    {
+        cout << endl << "--- !!! Failed insert consistency or size measurement, wrong number of elements !!! ---" << endl;
+        return 0;
+    }
+
+    for (int i = 0; i < size_content; i++)
+    {
+        if (content[i] != sorted_sequence_unique[i])
+        {
+            cout << endl << "--- !!! Failed order, DFS is supposed to sort the data !!! ---" << endl;
+            return 0;
+        }
+    }
+    delete[] content;
+
+    cout << "014 Checking the searchiness of the tree: \t\t\t\t" << finish - start << endl;
+    total += finish - start;
+
+    //----------- Test 015 Remove of an unique sequence (0 - n)
+
+    start = get_time();
+
+    for (int i = 0; i < n; i++)
+    {
+        remove(&sn, sorted_sequence_unique[i]);
+    }
+
+    finish = get_time();
+
+    if (size(sn) != 0)
+    {
+        cout << endl << "--- !!! Failed insert consistency or size measurement, elements stuck !!! ---" << endl;
+        return 0;
+    }
+    if (height(sn) != 0)
+    {
+        cout << endl << "--- !!! Failed insert consistency or height measurement, too high for an empty tree !!! ---" << endl;
+        return 0;
+    }
+
+    cout << "011 Remove of a random sequence (0 - n): \t\t\t\t" << finish - start << endl;
+    total += finish - start;
 
 
-    //cout << "Del elem test" << endl;
-    //cout << find(sn, 5) << " ";
-    //cout << del_elem(sn, 5) << " ";
-    ////cout << find(sn, 10) << " ";
-    //cout << "size: " << size(sn) << "  ";
-    //cout << del_elem(sn, 7) << " ";
-    cout << "size: " << size(sn) << "  ";
-    
-    //cout << "Remove test" << endl;
-    cout << exist(sn, 60) << " ";
-    cout << remove(&sn, 5) << " ";
-    cout << remove(&sn, 35)<< " ";
-    cout << exist(sn, 60) << " ";
-    cout << remove(&sn, 5);
-    cout << "size: " << size(sn) << "  " << endl;
+    //----------- End of tests
+    //
+    cout << "-----------" << endl << "Alltests finished, total time: \t" << total << endl;
 
- cout << "Destructor test" << endl;
-destructor(sn);
-cout << size(sn);
+    delete[] sequent_sequence;
+    delete[] rand_sequence_10;
+    delete[] rand_sequence_100;
+    delete[] rand_sequence_n;
+    delete[] rand_sequence_unique;
+    delete[] sorted_sequence_unique;
+
+    return 0;
 }
