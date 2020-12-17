@@ -1,24 +1,5 @@
 ﻿  maze.cpp
-d:\code\mipt\lion_king_maze\lion_king_maze\maze.cpp(26): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
-d:\code\mipt\lion_king_maze\lion_king_maze\maze.cpp(35): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
-d:\code\mipt\lion_king_maze\lion_king_maze\maze.cpp(40): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
-d:\code\mipt\lion_king_maze\lion_king_maze\maze.cpp(45): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
-d:\code\mipt\lion_king_maze\lion_king_maze\maze.cpp(51): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
-d:\code\mipt\lion_king_maze\lion_king_maze\maze.cpp(56): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
-d:\code\mipt\lion_king_maze\lion_king_maze\maze.cpp(61): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
-d:\code\mipt\lion_king_maze\lion_king_maze\maze.cpp(67): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
-d:\code\mipt\lion_king_maze\lion_king_maze\maze.cpp(78): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
-d:\code\mipt\lion_king_maze\lion_king_maze\maze.cpp(84): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
-d:\code\mipt\lion_king_maze\lion_king_maze\maze.cpp(90): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
-d:\code\mipt\lion_king_maze\lion_king_maze\maze.cpp(96): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
-d:\code\mipt\lion_king_maze\lion_king_maze\maze.cpp(102): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
-d:\code\mipt\lion_king_maze\lion_king_maze\maze.cpp(108): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
-d:\code\mipt\lion_king_maze\lion_king_maze\maze.cpp(113): warning C4244: +=: преобразование "double" в "float", возможна потеря данных
-d:\code\mipt\lion_king_maze\lion_king_maze\maze.cpp(119): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
-d:\code\mipt\lion_king_maze\lion_king_maze\maze.cpp(158): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
-d:\code\mipt\lion_king_maze\lion_king_maze\maze.cpp(200): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
-d:\code\mipt\lion_king_maze\lion_king_maze\maze.cpp(243): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
-d:\code\mipt\lion_king_maze\lion_king_maze\maze.cpp(295): warning C4244: инициализация: преобразование "sf::Int64" в "float", возможна потеря данных
-d:\code\mipt\lion_king_maze\lion_king_maze\maze.cpp(358): warning C4244: инициализация: преобразование "sf::Int64" в "float", возможна потеря данных
-d:\code\mipt\lion_king_maze\lion_king_maze\maze.cpp(422): warning C4244: инициализация: преобразование "sf::Int64" в "float", возможна потеря данных
+d:\code\mipt\lion_king_maze\lion_king_maze\maze.cpp(195): warning C4244: инициализация: преобразование "sf::Int64" в "float", возможна потеря данных
+d:\code\mipt\lion_king_maze\lion_king_maze\maze.cpp(257): warning C4244: инициализация: преобразование "sf::Int64" в "float", возможна потеря данных
+d:\code\mipt\lion_king_maze\lion_king_maze\maze.cpp(319): warning C4244: инициализация: преобразование "sf::Int64" в "float", возможна потеря данных
   lion_king_maze.vcxproj -> D:\Code\mipt\lion_king_maze\Debug\lion_king_maze.exe

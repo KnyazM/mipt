@@ -22,7 +22,7 @@ int rand_uns(int min, int max)
 
 int main()
 {
-    int n = 10000;
+    int n = 1000;
     int sum_for_O3 = 0, sum_check = 0, test_sequence_sum = 0, ongoing_sum = 0,
         * sequent_sequence = new int[n],
         * rand_sequence_10 = new int[n],
@@ -76,13 +76,13 @@ int main()
     //----------- Test 000 Insert of a sequent sequence
 
     start = get_time();
-    cout << "a";
+
     for (int i = 0; i < n; i++)
     {
         insert(&sn, sequent_sequence[i]);
     }
     finish = get_time();
-    cout << "b";
+
     if (size(sn) != n)
     {
         cout << endl << "--- !!! Failed insert consistency or size measurement, wrong number of elements !!! ---" << endl;

@@ -4,9 +4,13 @@
 
 #include <SFML/Graphics.hpp>
 
-const int HEIGHT_MAP1 = 21;
-const int WIDTH_MAP1 = 37;
-sf::String TileMap1[HEIGHT_MAP1] = {
+const int HEIGHT_MAP = 21;
+const int WIDTH_MAP = 38;
+
+
+
+
+sf::String TileMap1[HEIGHT_MAP] = {
   "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
   "b                                   b",
   "bl     bbbbbbbbbbbbbbbbbbbbbbb     lb",
@@ -30,10 +34,7 @@ sf::String TileMap1[HEIGHT_MAP1] = {
   "bbbbbbbbbbbbbbbbbbhhbbbbbbbbbbbbbbbbb",
 };
 
-
-const int HEIGHT_MAP2 = 21;
-const int WIDTH_MAP2 = 37;
-sf::String TileMap2[HEIGHT_MAP2] = {
+sf::String TileMap2[HEIGHT_MAP] = {
   "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
   "b   ll                        dd    b",
   "b      aaaaaaaaaaaaaaaaaaaaaaaa     b",
@@ -58,9 +59,7 @@ sf::String TileMap2[HEIGHT_MAP2] = {
 };
 
 
-const int HEIGHT_MAP3 = 21;
-const int WIDTH_MAP3 = 37;
-sf::String TileMap3[HEIGHT_MAP3] = {
+sf::String TileMap3[HEIGHT_MAP] = {
   "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
   "b l  aaaaaaaaaaaab aaaaaaaaaaaaab   b",
   "b e  bbbbbbbbbbbeb bbbbbbbbbbbbbbbbbb",
