@@ -1,5 +1,20 @@
 ﻿  maze.cpp
-d:\code\mipt\lion_king_maze\lion_king_maze\maze.cpp(306): warning C4244: инициализация: преобразование "sf::Int64" в "float", возможна потеря данных
-d:\code\mipt\lion_king_maze\lion_king_maze\maze.cpp(398): warning C4244: инициализация: преобразование "sf::Int64" в "float", возможна потеря данных
-d:\code\mipt\lion_king_maze\lion_king_maze\maze.cpp(487): warning C4244: инициализация: преобразование "sf::Int64" в "float", возможна потеря данных
+d:\code\mipt\lion_king_maze\lion_king_maze\maze.cpp(33): warning C4244: аргумент: преобразование "float" в "T", возможна потеря данных
+          with
+          [
+              T=int
+          ]
+d:\code\mipt\lion_king_maze\lion_king_maze\maze.cpp(67): warning C4244: инициализация: преобразование "float" в "int", возможна потеря данных
+d:\code\mipt\lion_king_maze\lion_king_maze\maze.cpp(68): warning C4244: инициализация: преобразование "float" в "int", возможна потеря данных
+d:\code\mipt\lion_king_maze\lion_king_maze\maze.cpp(124): warning C4305: =: усечение из "double" в "float"
+d:\code\mipt\lion_king_maze\lion_king_maze\maze.cpp(135): warning C4305: =: усечение из "double" в "float"
+d:\code\mipt\lion_king_maze\lion_king_maze\maze.cpp(146): warning C4305: =: усечение из "double" в "float"
+d:\code\mipt\lion_king_maze\lion_king_maze\maze.cpp(157): warning C4305: =: усечение из "double" в "float"
+d:\code\mipt\lion_king_maze\lion_king_maze\maze.cpp(201): warning C4305: =: усечение из "double" в "float"
+d:\code\mipt\lion_king_maze\lion_king_maze\maze.cpp(214): warning C4305: =: усечение из "double" в "float"
+d:\code\mipt\lion_king_maze\lion_king_maze\maze.cpp(226): warning C4305: =: усечение из "double" в "float"
+d:\code\mipt\lion_king_maze\lion_king_maze\maze.cpp(238): warning C4305: =: усечение из "double" в "float"
+d:\code\mipt\lion_king_maze\lion_king_maze\maze.cpp(437): warning C4244: инициализация: преобразование "sf::Int64" в "float", возможна потеря данных
+d:\code\mipt\lion_king_maze\lion_king_maze\maze.cpp(519): warning C4244: инициализация: преобразование "sf::Int64" в "float", возможна потеря данных
+d:\code\mipt\lion_king_maze\lion_king_maze\maze.cpp(600): warning C4244: инициализация: преобразование "sf::Int64" в "float", возможна потеря данных
   lion_king_maze.vcxproj -> D:\Code\mipt\lion_king_maze\Debug\lion_king_maze.exe
