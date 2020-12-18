@@ -18,7 +18,8 @@ void control(Sprite& simbasprite, Sprite& kovusprite, float time, float& Current
     {
         CurrentFrame += 0.005f * time;
 
-        if (CurrentFrame > 7) CurrentFrame -= 7;
+        if (CurrentFrame > 7)
+            CurrentFrame -= 7;
         simbasprite.setTextureRect(IntRect(51 * int(CurrentFrame), 244, 51, 51));
 
         simbasprite.move(0.1f * time, 0);
@@ -37,7 +38,7 @@ void control(Sprite& simbasprite, Sprite& kovusprite, float time, float& Current
 
     if ((Keyboard::isKeyPressed(Keyboard::Up)))
     {
-        CurrentFrame += 0.005f * time;
+        CurrentFrame += 0.1f * time;
         if (CurrentFrame > 2)
             CurrentFrame -= 2;
 
@@ -47,7 +48,7 @@ void control(Sprite& simbasprite, Sprite& kovusprite, float time, float& Current
 
     if ((Keyboard::isKeyPressed(Keyboard::Down)))
     {
-        CurrentFrame += 0.005f * time;
+        CurrentFrame += 0.1f * time;
 
         if (CurrentFrame > 2)
             CurrentFrame -= 2;
@@ -69,7 +70,7 @@ void control(Sprite& simbasprite, Sprite& kovusprite, float time, float& Current
         if (CurrentFrame > 6)
             CurrentFrame -= 6;
 
-        kovusprite.setTextureRect(IntRect(62 * int(CurrentFrame), 50, 62, 46));
+        kovusprite.setTextureRect(IntRect(67 * int(CurrentFrame), 50, 67, 50));
         kovusprite.move(0.1f * time, 0);
 
     }
@@ -81,14 +82,14 @@ void control(Sprite& simbasprite, Sprite& kovusprite, float time, float& Current
         if (CurrentFrame > 6)
             CurrentFrame -= 6;
 
-        kovusprite.setTextureRect(IntRect(62 * int(CurrentFrame + 1), 50, -62, 46));
+        kovusprite.setTextureRect(IntRect(66 * int(CurrentFrame + 1), 50, -65, 50));
         kovusprite.move(-0.1f * time, 0);
     }
 
     if ((Keyboard::isKeyPressed(Keyboard::W)))
     {
 
-        CurrentFrame += 0.005f * time;
+        CurrentFrame += 0.1f * time;
 
         if (CurrentFrame > 2)
             CurrentFrame -= 2;
@@ -99,7 +100,7 @@ void control(Sprite& simbasprite, Sprite& kovusprite, float time, float& Current
 
     if ((Keyboard::isKeyPressed(Keyboard::S)))
     {
-        CurrentFrame += 0.005f * time;
+        CurrentFrame += 0.1f * time;
 
         if (CurrentFrame > 2)
             CurrentFrame -= 2;
@@ -109,39 +110,118 @@ void control(Sprite& simbasprite, Sprite& kovusprite, float time, float& Current
     }
 }
 
+
+
+void non_control(Sprite& pumbasprite, Sprite& timonsprite, Sprite& zazusprite, float time, float& CurrentFrame, float& moveTimer) {
+
+    //MOVING PUMBA
+    
+    moveTimer += time;
+    CurrentFrame += 0.005f * time;
+    
+
+    if (moveTimer > 1000000)
+    {
+        if (CurrentFrame > 5)
+            CurrentFrame -= 5;
+        pumbasprite.setTextureRect(IntRect(38 * int(CurrentFrame + 1) + 6, 150, -40, 40));
+        pumbasprite.move(-0.1f * time, 0);
+        moveTimer = 0;
+        
+    }
+
+
+    if (moveTimer <= 1000000)
+    {
+        if (CurrentFrame > 5)
+            CurrentFrame -= 5;
+        pumbasprite.setTextureRect(IntRect(38 * int(CurrentFrame) + 6, 150, 40, 40));
+        pumbasprite.move(0.1f * time, 0);
+    }
+    
+    //MOVING TIMON
+
+    if (moveTimer > 1000000)
+    {
+        CurrentFrame += 0.005f * time;
+        if (CurrentFrame > 9)
+            CurrentFrame -= 9;
+        timonsprite.setTextureRect(IntRect(45 * int(CurrentFrame + 1) + 350, 610, -45, 47));
+        timonsprite.move(-0.1f * time, 0);
+        moveTimer = 0;
+
+    }
+
+
+    if (moveTimer < 1000000)
+    {
+        CurrentFrame += 0.005f * time;
+        if (CurrentFrame > 9)
+            CurrentFrame -= 9;
+        timonsprite.setTextureRect(IntRect(45 * int(CurrentFrame) + 350, 610, 45, 47));
+        timonsprite.move(0.1f * time, 0);
+        moveTimer += time;
+    }
+
+
+
+    //MOVING ZAZU
+
+    if (moveTimer > 1000000)
+    {
+        CurrentFrame += 0.005f * time;
+        if (CurrentFrame > 10)
+            CurrentFrame -= 10;
+        zazusprite.setTextureRect(IntRect(48 * int(CurrentFrame + 1), 100, -48, 40));
+        zazusprite.move(-0.1f * time, 0);
+        moveTimer = 0;
+
+    }
+
+
+    if (moveTimer < 1000000)
+    {
+        CurrentFrame += 0.005f * time;
+        if (CurrentFrame > 10)
+            CurrentFrame -= 10;
+        zazusprite.setTextureRect(IntRect(48 * int(CurrentFrame), 100, 48, 40));
+        zazusprite.move(0.1f * time, 0);
+        moveTimer += time;
+    }
+
+}
+
+
 //..................................................//
 //.................DRAWING MAP......................//
 //..................................................//
 
 
-void draw_map(Sprite& s_map, RenderWindow& window, Sprite& simbasprite, Sprite& kovusprite, sf::String TileMap[])
+void draw_map(Sprite& s_map, RenderWindow& window, Sprite& simbasprite, Sprite& kovusprite, Sprite& pumbasprite, Sprite& timonsprite, Sprite&zazusprite, sf::String TileMap[])
 {
     for (int i = 0; i < HEIGHT_MAP; i++)
         for (int j = 0; j < WIDTH_MAP; j++)
         {
-            if (TileMap[i][j] == 's')
-                s_map.setTextureRect(IntRect(332, 0, 68, 65));
-
             if (TileMap[i][j] == ' ')
-                s_map.setTextureRect(IntRect(255, 0, 73, 64));
+                s_map.setTextureRect(IntRect(143, 15, 33, 34));
 
             if (TileMap[i][j] == 'l')
-                s_map.setTextureRect(IntRect(0, 0, 65, 70));
+                s_map.setTextureRect(IntRect(0, 15, 33, 34));
 
             if (TileMap[i][j] == 'd')
-                s_map.setTextureRect(IntRect(195, 0, 58, 68));
+                s_map.setTextureRect(IntRect(108, 15, 33, 34));
 
             if (TileMap[i][j] == 'h')
-                s_map.setTextureRect(IntRect(130, 0, 62, 62));
+                s_map.setTextureRect(IntRect(74, 15, 33, 34));
 
             if (TileMap[i][j] == 'e')
-                s_map.setTextureRect(IntRect(0, 63, 70, 68));
+                s_map.setTextureRect(IntRect(174, 15, 34, 34));
 
             if (TileMap[i][j] == 'a')
-                s_map.setTextureRect(IntRect(72, 62, 69, 30));
+                s_map.setTextureRect(IntRect(242, 15, 34, 34));
 
             if (TileMap[i][j] == 'b')
-                s_map.setTextureRect(IntRect(403, 0, 66, 66));
+                s_map.setTextureRect(IntRect(208, 15, 33, 34));
 
 
             s_map.setPosition((float)j * 32, (float)i * 32);
@@ -150,6 +230,9 @@ void draw_map(Sprite& s_map, RenderWindow& window, Sprite& simbasprite, Sprite& 
 
     window.draw(simbasprite);
     window.draw(kovusprite);
+    window.draw(pumbasprite);
+    window.draw(timonsprite);
+    window.draw(zazusprite);
     window.display();
 }
 
@@ -158,6 +241,33 @@ void draw_map(Sprite& s_map, RenderWindow& window, Sprite& simbasprite, Sprite& 
 
 void run_1(RenderWindow& window)
 {
+    Image zazuimg;       zazuimg.loadFromFile("Images/zazu.png");
+
+    Texture zazutexture; zazutexture.loadFromImage(zazuimg);
+
+    Sprite zazusprite;   zazusprite.setTexture(zazutexture);
+    zazusprite.setTextureRect(IntRect(0, 100, 48, 40));//gjghjfdbnm
+    zazusprite.setPosition(210, 210);
+
+    //------------------------------------------------! ZAZU!
+    Image timonimg;       timonimg.loadFromFile("Images/timon.png");
+
+    Texture timontexture; timontexture.loadFromImage(timonimg);
+
+    Sprite timonsprite;   timonsprite.setTexture(timontexture);
+    timonsprite.setTextureRect(IntRect(0, 500, 4, 66));
+    timonsprite.setPosition(220, 220);
+
+    //--------------------------------------------------! TIMON!
+    Image pumbaimg;       pumbaimg.loadFromFile("Images/pumba.png");
+
+    Texture pumbatexture; pumbatexture.loadFromImage(pumbaimg);
+
+    Sprite pumbasprite;   pumbasprite.setTexture(pumbatexture);
+    pumbasprite.setTextureRect(IntRect(0, 500, 42, 58));
+    pumbasprite.setPosition(170, 170);
+
+    //---------------------------------------------------! PUMBA!
 
     Image map_image;      map_image.loadFromFile("Images/map.png");
 
@@ -172,7 +282,7 @@ void run_1(RenderWindow& window)
     Texture simbatexture; simbatexture.loadFromImage(simbaimg);
 
     Sprite simbasprite;   simbasprite.setTexture(simbatexture);
-    simbasprite.setTextureRect(IntRect(0, 25, 40, 53));
+    simbasprite.setTextureRect(IntRect(0, 25, 44, 51));
     simbasprite.setPosition(250, 250);
 
     //----------------------------------------------------! SIMBA!
@@ -188,6 +298,7 @@ void run_1(RenderWindow& window)
     //------------------------------------------------------! KOVU!
 
     float CurrentFrame = 0;
+    float moveTimer = 0;
     Clock clock;
 
     while (window.isOpen())
@@ -205,13 +316,16 @@ void run_1(RenderWindow& window)
         //! Key processing()
         control(simbasprite, kovusprite, time, CurrentFrame);
 
+        //! Non-control
+        non_control(pumbasprite, timonsprite, zazusprite, time, CurrentFrame, moveTimer);
+
         //-------------------------------------------------------------------------------
 
         window.clear();
 
         //! Draw map 1!
 
-        draw_map(s_map, window, simbasprite, kovusprite, TileMap1);
+        draw_map(s_map, window, simbasprite, kovusprite, pumbasprite, timonsprite, zazusprite, TileMap1);
     }
 }
 
@@ -221,6 +335,33 @@ void run_1(RenderWindow& window)
 
 void run_2(RenderWindow& window)
 {
+    Image zazuimg;       zazuimg.loadFromFile("Images/zazu.png");
+
+    Texture zazutexture; zazutexture.loadFromImage(zazuimg);
+
+    Sprite zazusprite;   zazusprite.setTexture(zazutexture);
+    zazusprite.setTextureRect(IntRect(0, 100, 48, 40));//gjghjfdbnm
+    zazusprite.setPosition(210, 210);
+
+    //------------------------------------------------! ZAZU!
+    Image timonimg;       timonimg.loadFromFile("Images/timon.png");
+
+    Texture timontexture; timontexture.loadFromImage(timonimg);
+
+    Sprite timonsprite;   timonsprite.setTexture(timontexture);
+    timonsprite.setTextureRect(IntRect(0, 500, 4, 66));
+    timonsprite.setPosition(220, 220);
+
+    //--------------------------------------------------! TIMON!
+    Image pumbaimg;       pumbaimg.loadFromFile("Images/pumba.png");
+
+    Texture pumbatexture; pumbatexture.loadFromImage(pumbaimg);
+
+    Sprite pumbasprite;   pumbasprite.setTexture(pumbatexture);
+    pumbasprite.setTextureRect(IntRect(0, 25, 44, 44));
+    pumbasprite.setPosition(300, 300);
+
+
     Image map_image;      map_image.loadFromFile("Images/map.png");
 
     Texture map;          map.loadFromImage(map_image);
@@ -273,7 +414,7 @@ void run_2(RenderWindow& window)
 
         //! Draw map 2!
 
-        draw_map(s_map, window, simbasprite, kovusprite, TileMap2);
+        draw_map(s_map, window, simbasprite, kovusprite, pumbasprite, timonsprite, zazusprite, TileMap2);
     }
 
 }
@@ -282,6 +423,33 @@ void run_2(RenderWindow& window)
 
 void run_3(RenderWindow& window)
 {
+    Image zazuimg;       zazuimg.loadFromFile("Images/zazu.png");
+
+    Texture zazutexture; zazutexture.loadFromImage(zazuimg);
+
+    Sprite zazusprite;   zazusprite.setTexture(zazutexture);
+    zazusprite.setTextureRect(IntRect(0, 100, 48, 40));//gjghjfdbnm
+    zazusprite.setPosition(210, 210);
+
+    //------------------------------------------------! ZAZU!
+    Image timonimg;       timonimg.loadFromFile("Images/timon.png");
+
+    Texture timontexture; timontexture.loadFromImage(timonimg);
+
+    Sprite timonsprite;   timonsprite.setTexture(timontexture);
+    timonsprite.setTextureRect(IntRect(0, 500, 4, 66));
+    timonsprite.setPosition(220, 220);
+
+    //--------------------------------------------------! TIMON!
+    Image pumbaimg;       pumbaimg.loadFromFile("Images/pumba.png");
+
+    Texture pumbatexture; pumbatexture.loadFromImage(pumbaimg);
+
+    Sprite pumbasprite;   pumbasprite.setTexture(pumbatexture);
+    pumbasprite.setTextureRect(IntRect(0, 25, 44, 44));
+    pumbasprite.setPosition(300, 300);
+
+
     Image map_image;      map_image.loadFromFile("Images/map.png");
 
     Texture map;          map.loadFromImage(map_image);
@@ -318,7 +486,7 @@ void run_3(RenderWindow& window)
 
         float time = clock.getElapsedTime().asMicroseconds();
         clock.restart();
-        time = time / 800;
+        time = time / 600;
 
         sf::Event event;
         while (window.pollEvent(event))
@@ -335,7 +503,7 @@ void run_3(RenderWindow& window)
 
         //! Draw map 3!
 
-        draw_map(s_map, window, simbasprite, kovusprite, TileMap3);
+        draw_map(s_map, window, simbasprite, kovusprite, pumbasprite, timonsprite, zazusprite, TileMap3);
     }
 
 }
@@ -438,7 +606,7 @@ void menu(RenderWindow& window)
 
     //-------------------------------------------------exit made
 
-    Image     info;           info.loadFromFile("Images/about.png");
+    Image     info;           info.loadFromFile("Images/info/about.png");
 
     Texture   infotexture;    infotexture.loadFromImage(info);
 
