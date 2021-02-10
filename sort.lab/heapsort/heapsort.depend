@@ -1,0 +1,10 @@
+# depslib dependency file v1.0
+1584205420 source:c:\users\masha\desktop\heapsort\main.cpp
+	<iostream>
+
+1604862142 source:c:\users\masha\desktop\sort.lab\heapsort\main.cpp
+	<iostream>
+	<ctime>
+	<cstdlib>
+	<chrono>
+

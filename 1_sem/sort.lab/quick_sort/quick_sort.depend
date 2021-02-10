@@ -1,7 +1,0 @@
-# depslib dependency file v1.0
-1604950664 source:c:\users\masha\desktop\sort.lab\quick_sort\main.cpp
-	<iostream>
-	<cstdlib>
-	<ctime>
-	<chrono>
-

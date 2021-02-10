@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1604793134 source:c:\users\masha\desktop\sort.lab\selection_sort\main.cpp
+	<iostream>
+	<stdio.h>
+	<cstdlib>
+	<ctime>
+	<chrono>
+

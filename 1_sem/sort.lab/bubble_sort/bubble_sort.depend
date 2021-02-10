@@ -1,7 +1,0 @@
-# depslib dependency file v1.0
-1604825275 source:c:\users\masha\desktop\sort.lab\bubble_sort\main.cpp
-	<iostream>
-	<cstdlib>
-	<ctime>
-	<chrono>
-
